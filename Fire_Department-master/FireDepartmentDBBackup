@@ -1,0 +1,1217 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.3
+-- Dumped by pg_dump version 15.3
+
+-- Started on 2023-05-28 15:02:40
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 220 (class 1259 OID 17762)
+-- Name: duty_shift; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.duty_shift (
+    shift_id integer NOT NULL,
+    employee_id integer,
+    shift_date date,
+    duty_shift_id integer NOT NULL
+);
+
+
+ALTER TABLE public.duty_shift OWNER TO postgres;
+
+--
+-- TOC entry 238 (class 1259 OID 17897)
+-- Name: duty_shift_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.duty_shift_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.duty_shift_seq OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 17761)
+-- Name: duty_shift_shift_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.duty_shift_shift_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.duty_shift_shift_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3466 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: duty_shift_shift_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.duty_shift_shift_id_seq OWNED BY public.duty_shift.shift_id;
+
+
+--
+-- TOC entry 218 (class 1259 OID 17733)
+-- Name: employee; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.employee (
+    employee_id integer NOT NULL,
+    unit_id character varying(15),
+    badge_id character varying(30) NOT NULL,
+    employee_equipment_id integer,
+    interventions_count integer,
+    length_of_service character varying(20),
+    salary integer,
+    title character varying(20),
+    employee_state character varying(25),
+    employee_type_id integer,
+    employee_name character varying(20),
+    employee_surname character varying(20)
+);
+
+
+ALTER TABLE public.employee OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 17732)
+-- Name: employee_employee_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.employee_employee_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.employee_employee_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3467 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: employee_employee_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.employee_employee_id_seq OWNED BY public.employee.employee_id;
+
+
+--
+-- TOC entry 237 (class 1259 OID 17884)
+-- Name: employee_equipment; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.employee_equipment (
+    employee_equipment_id integer NOT NULL,
+    employee_id integer,
+    equipment_condition character varying(25)
+);
+
+
+ALTER TABLE public.employee_equipment OWNER TO postgres;
+
+--
+-- TOC entry 236 (class 1259 OID 17883)
+-- Name: employee_equipment_employee_equipment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.employee_equipment_employee_equipment_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.employee_equipment_employee_equipment_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3468 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: employee_equipment_employee_equipment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.employee_equipment_employee_equipment_id_seq OWNED BY public.employee_equipment.employee_equipment_id;
+
+
+--
+-- TOC entry 233 (class 1259 OID 17879)
+-- Name: employee_equipment_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.employee_equipment_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.employee_equipment_seq OWNER TO postgres;
+
+--
+-- TOC entry 235 (class 1259 OID 17882)
+-- Name: employee_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.employee_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.employee_seq OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 17726)
+-- Name: employee_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.employee_type (
+    employee_type_id integer NOT NULL,
+    employee_type_name character varying(45),
+    retirement_age integer
+);
+
+
+ALTER TABLE public.employee_type OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 17725)
+-- Name: employee_type_employee_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.employee_type_employee_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.employee_type_employee_type_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3469 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: employee_type_employee_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.employee_type_employee_type_id_seq OWNED BY public.employee_type.employee_type_id;
+
+
+--
+-- TOC entry 234 (class 1259 OID 17880)
+-- Name: employee_type_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.employee_type_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.employee_type_seq OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 17713)
+-- Name: fire_station; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fire_station (
+    unit_id character varying(15) NOT NULL,
+    address character varying(30) NOT NULL,
+    city character varying(30) NOT NULL,
+    county character varying(30) NOT NULL,
+    employees_count integer,
+    special_vehicles_count integer,
+    interventions_count integer
+);
+
+
+ALTER TABLE public.fire_station OWNER TO postgres;
+
+--
+-- TOC entry 229 (class 1259 OID 17843)
+-- Name: intervention; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.intervention (
+    intervention_id integer NOT NULL,
+    intervention_date date,
+    intervention_type character varying(50),
+    intervention_leader_id integer,
+    intervention_duration character varying(15)
+);
+
+
+ALTER TABLE public.intervention OWNER TO postgres;
+
+--
+-- TOC entry 232 (class 1259 OID 17866)
+-- Name: intervention_crew; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.intervention_crew (
+    intervention_id integer,
+    employee_id integer
+);
+
+
+ALTER TABLE public.intervention_crew OWNER TO postgres;
+
+--
+-- TOC entry 228 (class 1259 OID 17842)
+-- Name: intervention_intervention_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.intervention_intervention_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.intervention_intervention_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3470 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: intervention_intervention_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.intervention_intervention_id_seq OWNED BY public.intervention.intervention_id;
+
+
+--
+-- TOC entry 241 (class 1259 OID 17904)
+-- Name: intervention_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.intervention_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.intervention_seq OWNER TO postgres;
+
+--
+-- TOC entry 224 (class 1259 OID 17787)
+-- Name: special_vehicle; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.special_vehicle (
+    licence_plate_number character varying(15) NOT NULL,
+    unit_id character varying(15),
+    special_vehicle_type character varying(100),
+    vehicle_driver_id integer,
+    vehicle_condition character varying(25),
+    mileage character varying(10),
+    fabrication_year integer,
+    interventions_count integer,
+    vehicle_equipment_id integer
+);
+
+
+ALTER TABLE public.special_vehicle OWNER TO postgres;
+
+--
+-- TOC entry 227 (class 1259 OID 17829)
+-- Name: special_vehicle_crew; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.special_vehicle_crew (
+    licence_plate_number character varying(15),
+    employee_id integer
+);
+
+
+ALTER TABLE public.special_vehicle_crew OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1259 OID 17855)
+-- Name: special_vehicle_intervention; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.special_vehicle_intervention (
+    intervention_id integer NOT NULL,
+    licence_plate_number character varying(15)
+);
+
+
+ALTER TABLE public.special_vehicle_intervention OWNER TO postgres;
+
+--
+-- TOC entry 230 (class 1259 OID 17854)
+-- Name: special_vehicle_intervention_intervention_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.special_vehicle_intervention_intervention_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.special_vehicle_intervention_intervention_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3471 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: special_vehicle_intervention_intervention_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.special_vehicle_intervention_intervention_id_seq OWNED BY public.special_vehicle_intervention.intervention_id;
+
+
+--
+-- TOC entry 242 (class 1259 OID 17905)
+-- Name: special_vehicle_intervention_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.special_vehicle_intervention_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.special_vehicle_intervention_seq OWNER TO postgres;
+
+--
+-- TOC entry 226 (class 1259 OID 17818)
+-- Name: special_vehicle_revision; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.special_vehicle_revision (
+    revision_id integer NOT NULL,
+    licence_plate_number character varying(15),
+    revision_date date,
+    revision_description character varying(150),
+    service character varying(20)
+);
+
+
+ALTER TABLE public.special_vehicle_revision OWNER TO postgres;
+
+--
+-- TOC entry 225 (class 1259 OID 17817)
+-- Name: special_vehicle_revision_revision_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.special_vehicle_revision_revision_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.special_vehicle_revision_revision_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3472 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: special_vehicle_revision_revision_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.special_vehicle_revision_revision_id_seq OWNED BY public.special_vehicle_revision.revision_id;
+
+
+--
+-- TOC entry 240 (class 1259 OID 17899)
+-- Name: special_vehicle_revision_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.special_vehicle_revision_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.special_vehicle_revision_seq OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 17773)
+-- Name: special_vehicle_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.special_vehicle_type (
+    category_name character varying(100) NOT NULL,
+    special_vehicle_batch character varying(25)
+);
+
+
+ALTER TABLE public.special_vehicle_type OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 17779)
+-- Name: vehicle_equipment; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vehicle_equipment (
+    equipment_id integer NOT NULL,
+    licence_plate_number character varying(15),
+    equipment_condition character varying(25),
+    equipment_name character varying(35)
+);
+
+
+ALTER TABLE public.vehicle_equipment OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 17778)
+-- Name: vehicle_equipment_equipment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vehicle_equipment_equipment_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.vehicle_equipment_equipment_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3473 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: vehicle_equipment_equipment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.vehicle_equipment_equipment_id_seq OWNED BY public.vehicle_equipment.equipment_id;
+
+
+--
+-- TOC entry 239 (class 1259 OID 17898)
+-- Name: vehicle_equipment_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vehicle_equipment_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.vehicle_equipment_seq OWNER TO postgres;
+
+--
+-- TOC entry 3238 (class 2604 OID 17765)
+-- Name: duty_shift shift_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.duty_shift ALTER COLUMN shift_id SET DEFAULT nextval('public.duty_shift_shift_id_seq'::regclass);
+
+
+--
+-- TOC entry 3237 (class 2604 OID 17736)
+-- Name: employee employee_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee ALTER COLUMN employee_id SET DEFAULT nextval('public.employee_employee_id_seq'::regclass);
+
+
+--
+-- TOC entry 3243 (class 2604 OID 17887)
+-- Name: employee_equipment employee_equipment_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee_equipment ALTER COLUMN employee_equipment_id SET DEFAULT nextval('public.employee_equipment_employee_equipment_id_seq'::regclass);
+
+
+--
+-- TOC entry 3236 (class 2604 OID 17729)
+-- Name: employee_type employee_type_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee_type ALTER COLUMN employee_type_id SET DEFAULT nextval('public.employee_type_employee_type_id_seq'::regclass);
+
+
+--
+-- TOC entry 3241 (class 2604 OID 17846)
+-- Name: intervention intervention_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.intervention ALTER COLUMN intervention_id SET DEFAULT nextval('public.intervention_intervention_id_seq'::regclass);
+
+
+--
+-- TOC entry 3242 (class 2604 OID 17858)
+-- Name: special_vehicle_intervention intervention_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_intervention ALTER COLUMN intervention_id SET DEFAULT nextval('public.special_vehicle_intervention_intervention_id_seq'::regclass);
+
+
+--
+-- TOC entry 3240 (class 2604 OID 17821)
+-- Name: special_vehicle_revision revision_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_revision ALTER COLUMN revision_id SET DEFAULT nextval('public.special_vehicle_revision_revision_id_seq'::regclass);
+
+
+--
+-- TOC entry 3239 (class 2604 OID 17782)
+-- Name: vehicle_equipment equipment_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vehicle_equipment ALTER COLUMN equipment_id SET DEFAULT nextval('public.vehicle_equipment_equipment_id_seq'::regclass);
+
+
+--
+-- TOC entry 3438 (class 0 OID 17762)
+-- Dependencies: 220
+-- Data for Name: duty_shift; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.duty_shift (shift_id, employee_id, shift_date, duty_shift_id) FROM stdin;
+2	52	2023-05-27	2
+1	52	2023-05-24	1
+3	2	2023-05-17	52
+4	3	2023-03-17	53
+\.
+
+
+--
+-- TOC entry 3436 (class 0 OID 17733)
+-- Dependencies: 218
+-- Data for Name: employee; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.employee (employee_id, unit_id, badge_id, employee_equipment_id, interventions_count, length_of_service, salary, title, employee_state, employee_type_id, employee_name, employee_surname) FROM stdin;
+2	BV-213551	BV98144	152	43	4 ani si 2 luni	2700	Captain	Active	2	Ionescu	Mihai
+52	BV-213551	BV98145	152	34	1 an	1950	Major Sergeant	Active	2	Georgescu	Cristian
+3	BV-213551	BV98146	2	69	8 ani	5329	Major General	Active	2	Dumitru	Goerge
+\.
+
+
+--
+-- TOC entry 3455 (class 0 OID 17884)
+-- Dependencies: 237
+-- Data for Name: employee_equipment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.employee_equipment (employee_equipment_id, employee_id, equipment_condition) FROM stdin;
+152	1	Very good
+1	2	Very good
+2	3	Bad
+\.
+
+
+--
+-- TOC entry 3434 (class 0 OID 17726)
+-- Dependencies: 216
+-- Data for Name: employee_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.employee_type (employee_type_id, employee_type_name, retirement_age) FROM stdin;
+2	Special vehicle driver	60
+3	Crew commander	50
+4	Intervention commander	45
+5	Intervention guard chief	53
+\.
+
+
+--
+-- TOC entry 3432 (class 0 OID 17713)
+-- Dependencies: 214
+-- Data for Name: fire_station; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.fire_station (unit_id, address, city, county, employees_count, special_vehicles_count, interventions_count) FROM stdin;
+BV-213552	Str. Mesteacanului	Brasov	Brasov	60	7	20
+BV-213553	Bulevardul Alexandru Vlahuta	Brasov	Brasov	36	3	35
+BZ-115151	Str. Alunului	Buzau	Buzau	78	7	150
+BZ-156652	Str. Marului	Buzau	Buzau	90	12	350
+BV-213551	Str. Zizinului	Brasov	Brasov	60	7	20
+\.
+
+
+--
+-- TOC entry 3447 (class 0 OID 17843)
+-- Dependencies: 229
+-- Data for Name: intervention; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.intervention (intervention_id, intervention_date, intervention_type, intervention_leader_id, intervention_duration) FROM stdin;
+2	2023-01-01	House on fire	2	350 minutes
+1	2023-03-01	House on fire	2	350 minutes
+\.
+
+
+--
+-- TOC entry 3450 (class 0 OID 17866)
+-- Dependencies: 232
+-- Data for Name: intervention_crew; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.intervention_crew (intervention_id, employee_id) FROM stdin;
+2	3
+1	52
+\.
+
+
+--
+-- TOC entry 3442 (class 0 OID 17787)
+-- Dependencies: 224
+-- Data for Name: special_vehicle; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.special_vehicle (licence_plate_number, unit_id, special_vehicle_type, vehicle_driver_id, vehicle_condition, mileage, fabrication_year, interventions_count, vehicle_equipment_id) FROM stdin;
+MAI 585960	BV-213551	SMURD Ambulance Type B	3	Very good	504.000 km	2017	3550	1
+MAI 585961	BV-213551	SMURD Ambulance Type B	52	Very good	650.000 km	2018	5060	2
+\.
+
+
+--
+-- TOC entry 3445 (class 0 OID 17829)
+-- Dependencies: 227
+-- Data for Name: special_vehicle_crew; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.special_vehicle_crew (licence_plate_number, employee_id) FROM stdin;
+MAI 585960	3
+MAI 585961	2
+\.
+
+
+--
+-- TOC entry 3449 (class 0 OID 17855)
+-- Dependencies: 231
+-- Data for Name: special_vehicle_intervention; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.special_vehicle_intervention (intervention_id, licence_plate_number) FROM stdin;
+1	MAI 585960
+2	MAI 585961
+\.
+
+
+--
+-- TOC entry 3444 (class 0 OID 17818)
+-- Dependencies: 226
+-- Data for Name: special_vehicle_revision; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.special_vehicle_revision (revision_id, licence_plate_number, revision_date, revision_description, service) FROM stdin;
+1	MAI 585960	2022-12-10	Change motor oil + oil filter + pollen filter	Renault
+2	MAI 585960	2023-01-01	Change tires	SC Your Car SRL
+\.
+
+
+--
+-- TOC entry 3439 (class 0 OID 17773)
+-- Dependencies: 221
+-- Data for Name: special_vehicle_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.special_vehicle_type (category_name, special_vehicle_batch) FROM stdin;
+Special vehicle for extinguishing fire with water and foam of small capacity	ZX-1542
+Special vehicle for extinguishing fire with water and foam of medium capacity	ZX-1542
+Special vehicle for extinguishing fire with water and foam of big capacity	ZX-1543
+Special vehicle for extinguishing fire with powder	Personal funds
+SMURD Ambulance Type B	Personal funds
+\.
+
+
+--
+-- TOC entry 3441 (class 0 OID 17779)
+-- Dependencies: 223
+-- Data for Name: vehicle_equipment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.vehicle_equipment (equipment_id, licence_plate_number, equipment_condition, equipment_name) FROM stdin;
+1	MAI 585960	Very good	First aid kit
+2	MAI 585961	Very good	First aid kit
+\.
+
+
+--
+-- TOC entry 3474 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: duty_shift_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.duty_shift_seq', 201, true);
+
+
+--
+-- TOC entry 3475 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: duty_shift_shift_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.duty_shift_shift_id_seq', 6, true);
+
+
+--
+-- TOC entry 3476 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: employee_employee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.employee_employee_id_seq', 1, false);
+
+
+--
+-- TOC entry 3477 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: employee_equipment_employee_equipment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.employee_equipment_employee_equipment_id_seq', 1, false);
+
+
+--
+-- TOC entry 3478 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: employee_equipment_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.employee_equipment_seq', 251, true);
+
+
+--
+-- TOC entry 3479 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: employee_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.employee_seq', 101, true);
+
+
+--
+-- TOC entry 3480 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: employee_type_employee_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.employee_type_employee_type_id_seq', 1, false);
+
+
+--
+-- TOC entry 3481 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: employee_type_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.employee_type_seq', 51, true);
+
+
+--
+-- TOC entry 3482 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: intervention_intervention_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.intervention_intervention_id_seq', 1, false);
+
+
+--
+-- TOC entry 3483 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: intervention_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.intervention_seq', 51, true);
+
+
+--
+-- TOC entry 3484 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: special_vehicle_intervention_intervention_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.special_vehicle_intervention_intervention_id_seq', 1, false);
+
+
+--
+-- TOC entry 3485 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: special_vehicle_intervention_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.special_vehicle_intervention_seq', 1, false);
+
+
+--
+-- TOC entry 3486 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: special_vehicle_revision_revision_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.special_vehicle_revision_revision_id_seq', 1, false);
+
+
+--
+-- TOC entry 3487 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: special_vehicle_revision_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.special_vehicle_revision_seq', 51, true);
+
+
+--
+-- TOC entry 3488 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: vehicle_equipment_equipment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.vehicle_equipment_equipment_id_seq', 1, false);
+
+
+--
+-- TOC entry 3489 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: vehicle_equipment_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.vehicle_equipment_seq', 51, true);
+
+
+--
+-- TOC entry 3253 (class 2606 OID 17767)
+-- Name: duty_shift duty_shift_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.duty_shift
+    ADD CONSTRAINT duty_shift_pkey PRIMARY KEY (shift_id);
+
+
+--
+-- TOC entry 3249 (class 2606 OID 17740)
+-- Name: employee employee_badge_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee
+    ADD CONSTRAINT employee_badge_id_key UNIQUE (badge_id);
+
+
+--
+-- TOC entry 3269 (class 2606 OID 17891)
+-- Name: employee_equipment employee_equipment_employee_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee_equipment
+    ADD CONSTRAINT employee_equipment_employee_id_key UNIQUE (employee_id);
+
+
+--
+-- TOC entry 3271 (class 2606 OID 17889)
+-- Name: employee_equipment employee_equipment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee_equipment
+    ADD CONSTRAINT employee_equipment_pkey PRIMARY KEY (employee_equipment_id);
+
+
+--
+-- TOC entry 3251 (class 2606 OID 17738)
+-- Name: employee employee_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee
+    ADD CONSTRAINT employee_pkey PRIMARY KEY (employee_id);
+
+
+--
+-- TOC entry 3247 (class 2606 OID 17731)
+-- Name: employee_type employee_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee_type
+    ADD CONSTRAINT employee_type_pkey PRIMARY KEY (employee_type_id);
+
+
+--
+-- TOC entry 3245 (class 2606 OID 17717)
+-- Name: fire_station fire_station_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fire_station
+    ADD CONSTRAINT fire_station_pkey PRIMARY KEY (unit_id);
+
+
+--
+-- TOC entry 3265 (class 2606 OID 17848)
+-- Name: intervention intervention_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.intervention
+    ADD CONSTRAINT intervention_pkey PRIMARY KEY (intervention_id);
+
+
+--
+-- TOC entry 3267 (class 2606 OID 17860)
+-- Name: special_vehicle_intervention special_vehicle_intervention_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_intervention
+    ADD CONSTRAINT special_vehicle_intervention_pkey PRIMARY KEY (intervention_id);
+
+
+--
+-- TOC entry 3261 (class 2606 OID 17791)
+-- Name: special_vehicle special_vehicle_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle
+    ADD CONSTRAINT special_vehicle_pkey PRIMARY KEY (licence_plate_number);
+
+
+--
+-- TOC entry 3263 (class 2606 OID 17823)
+-- Name: special_vehicle_revision special_vehicle_revision_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_revision
+    ADD CONSTRAINT special_vehicle_revision_pkey PRIMARY KEY (revision_id);
+
+
+--
+-- TOC entry 3255 (class 2606 OID 17777)
+-- Name: special_vehicle_type special_vehicle_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_type
+    ADD CONSTRAINT special_vehicle_type_pkey PRIMARY KEY (category_name);
+
+
+--
+-- TOC entry 3257 (class 2606 OID 17786)
+-- Name: vehicle_equipment vehicle_equipment_licence_plate_number_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vehicle_equipment
+    ADD CONSTRAINT vehicle_equipment_licence_plate_number_key UNIQUE (licence_plate_number);
+
+
+--
+-- TOC entry 3259 (class 2606 OID 17784)
+-- Name: vehicle_equipment vehicle_equipment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vehicle_equipment
+    ADD CONSTRAINT vehicle_equipment_pkey PRIMARY KEY (equipment_id);
+
+
+--
+-- TOC entry 3275 (class 2606 OID 17768)
+-- Name: duty_shift duty_shift_employee_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.duty_shift
+    ADD CONSTRAINT duty_shift_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employee(employee_id);
+
+
+--
+-- TOC entry 3272 (class 2606 OID 17751)
+-- Name: employee employee_employee_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee
+    ADD CONSTRAINT employee_employee_type_id_fkey FOREIGN KEY (employee_type_id) REFERENCES public.employee_type(employee_type_id);
+
+
+--
+-- TOC entry 3273 (class 2606 OID 17741)
+-- Name: employee employee_unit_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee
+    ADD CONSTRAINT employee_unit_id_fkey FOREIGN KEY (unit_id) REFERENCES public.fire_station(unit_id);
+
+
+--
+-- TOC entry 3274 (class 2606 OID 17892)
+-- Name: employee fk_employee_equipment; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee
+    ADD CONSTRAINT fk_employee_equipment FOREIGN KEY (employee_equipment_id) REFERENCES public.employee_equipment(employee_equipment_id);
+
+
+--
+-- TOC entry 3285 (class 2606 OID 17906)
+-- Name: special_vehicle_intervention fk_special_vehicle_intervention; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_intervention
+    ADD CONSTRAINT fk_special_vehicle_intervention FOREIGN KEY (licence_plate_number) REFERENCES public.special_vehicle(licence_plate_number);
+
+
+--
+-- TOC entry 3286 (class 2606 OID 17911)
+-- Name: special_vehicle_intervention fk_special_vehicle_intervention_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_intervention
+    ADD CONSTRAINT fk_special_vehicle_intervention_id FOREIGN KEY (intervention_id) REFERENCES public.intervention(intervention_id);
+
+
+--
+-- TOC entry 3276 (class 2606 OID 17812)
+-- Name: vehicle_equipment fk_vehicle_equipment; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vehicle_equipment
+    ADD CONSTRAINT fk_vehicle_equipment FOREIGN KEY (licence_plate_number) REFERENCES public.special_vehicle(licence_plate_number);
+
+
+--
+-- TOC entry 3288 (class 2606 OID 17874)
+-- Name: intervention_crew intervention_crew_employee_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.intervention_crew
+    ADD CONSTRAINT intervention_crew_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employee(employee_id);
+
+
+--
+-- TOC entry 3289 (class 2606 OID 17869)
+-- Name: intervention_crew intervention_crew_intervention_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.intervention_crew
+    ADD CONSTRAINT intervention_crew_intervention_id_fkey FOREIGN KEY (intervention_id) REFERENCES public.intervention(intervention_id);
+
+
+--
+-- TOC entry 3284 (class 2606 OID 17849)
+-- Name: intervention intervention_intervention_leader_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.intervention
+    ADD CONSTRAINT intervention_intervention_leader_id_fkey FOREIGN KEY (intervention_leader_id) REFERENCES public.employee(employee_id);
+
+
+--
+-- TOC entry 3282 (class 2606 OID 17837)
+-- Name: special_vehicle_crew special_vehicle_crew_employee_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_crew
+    ADD CONSTRAINT special_vehicle_crew_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employee(employee_id);
+
+
+--
+-- TOC entry 3283 (class 2606 OID 17832)
+-- Name: special_vehicle_crew special_vehicle_crew_licence_plate_number_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_crew
+    ADD CONSTRAINT special_vehicle_crew_licence_plate_number_fkey FOREIGN KEY (licence_plate_number) REFERENCES public.special_vehicle(licence_plate_number);
+
+
+--
+-- TOC entry 3287 (class 2606 OID 17861)
+-- Name: special_vehicle_intervention special_vehicle_intervention_licence_plate_number_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_intervention
+    ADD CONSTRAINT special_vehicle_intervention_licence_plate_number_fkey FOREIGN KEY (licence_plate_number) REFERENCES public.special_vehicle(licence_plate_number);
+
+
+--
+-- TOC entry 3281 (class 2606 OID 17824)
+-- Name: special_vehicle_revision special_vehicle_revision_licence_plate_number_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle_revision
+    ADD CONSTRAINT special_vehicle_revision_licence_plate_number_fkey FOREIGN KEY (licence_plate_number) REFERENCES public.special_vehicle(licence_plate_number);
+
+
+--
+-- TOC entry 3277 (class 2606 OID 17797)
+-- Name: special_vehicle special_vehicle_special_vehicle_type_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle
+    ADD CONSTRAINT special_vehicle_special_vehicle_type_fkey FOREIGN KEY (special_vehicle_type) REFERENCES public.special_vehicle_type(category_name);
+
+
+--
+-- TOC entry 3278 (class 2606 OID 17792)
+-- Name: special_vehicle special_vehicle_unit_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle
+    ADD CONSTRAINT special_vehicle_unit_id_fkey FOREIGN KEY (unit_id) REFERENCES public.fire_station(unit_id);
+
+
+--
+-- TOC entry 3279 (class 2606 OID 17802)
+-- Name: special_vehicle special_vehicle_vehicle_driver_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle
+    ADD CONSTRAINT special_vehicle_vehicle_driver_id_fkey FOREIGN KEY (vehicle_driver_id) REFERENCES public.employee(employee_id);
+
+
+--
+-- TOC entry 3280 (class 2606 OID 17807)
+-- Name: special_vehicle special_vehicle_vehicle_equipment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.special_vehicle
+    ADD CONSTRAINT special_vehicle_vehicle_equipment_id_fkey FOREIGN KEY (vehicle_equipment_id) REFERENCES public.vehicle_equipment(equipment_id);
+
+
+-- Completed on 2023-05-28 15:02:40
+
+--
+-- PostgreSQL database dump complete
+--
+
